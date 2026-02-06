@@ -1,4 +1,4 @@
-.signup-page {
+.signupPage {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -6,7 +6,7 @@
   background: linear-gradient(135deg, #f5f7fb, #eef1ff);
 }
 
-.signup-card {
+.signupCard {
   width: 100%;
   max-width: 360px;
   background: white;
@@ -19,12 +19,12 @@
   margin: 20px;
 }
 
-/* Header spacing */
-.signup-card h2 {
+
+.signupCard h2 {
   margin-bottom: 2px;
 }
 
-.signup-card p {
+.signupCard p {
   margin-bottom: 12px;
   font-size: 13px;
   color: #666;
