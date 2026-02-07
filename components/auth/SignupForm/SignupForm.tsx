@@ -80,7 +80,7 @@ export default function SignupForm() {
       };
 
       await axios.post(
-        `${process.env.NEXT_PUBLIC_AUTH_BASE_URL}/signup`,
+        `${process.env.NEXT_PUBLIC_AUTH_BASE_URL}/auth/signup`,
             payload,
             {
                 headers: {

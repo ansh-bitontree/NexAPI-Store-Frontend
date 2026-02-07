@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";  
 import Link from "next/link";  
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import Input from "@/components/Input/Input";
 import PasswordInput from "@/components/PasswordInput/PasswordInput";
@@ -14,46 +14,53 @@ import './LoginForm.css';
 
 function LoginForm() {
   const [values, setValues] = useState({ email: "", password: "" });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<LoginErrors>({});
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  interface LoginErrors{
+    email?: string;
+    password?: string;
+  }
   
   const router = useRouter();  
 
-  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {  
-    e.preventDefault();
-    setIsSubmitted(true);
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  setIsSubmitted(true);
 
-    const validationErrors = validateLogin(values);
-    setErrors(validationErrors);
-    if (Object.keys(validationErrors).length > 0) return;
+  const validationErrors = validateLogin(values);
+  setErrors(validationErrors);
+  if (Object.keys(validationErrors).length > 0) return;
 
-    try {
-      setLoading(true);
+  try {
+    setLoading(true);
 
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_AUTH_BASE_URL}/login`,
-        values
-      );
-      localStorage.setItem("token", res.data.access_token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_AUTH_BASE_URL}/auth/login`,
+      values
+    );
+    localStorage.setItem("token", res.data.access_token);
+    localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      toast.success("Login successful");
-      router.push("/dashboard");  
-    } catch (err: any) {  
-      if (err.response?.status === 401 || err.response?.status === 400) {
-        toast.error("Invalid email or password");
-      } else {
-        setServerError("Server error. Try again later.");
-      }
-    } finally {
-      setLoading(false);
+    toast.success("Login successful");
+    router.push("/dashboard");
+  } catch (err) {
+    const error = err as AxiosError;
+
+    if (error.response?.status === 401 || error.response?.status === 400) {
+      toast.error("Invalid email or password");
+    } else {
+      setServerError("Server error. Try again later.");
     }
-  };
+  } finally {
+    setLoading(false);
+  }
+};
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {  
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {  
     const { name, value } = e.target;
 
     const newValues = { ...values, [name]: value };

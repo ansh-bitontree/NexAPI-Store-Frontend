@@ -1,5 +1,5 @@
 "use client";
-import AuthHeader from "@/components/auth/AuthHeader/AuthHeader";
+import DashboardHeader from "@/components/Dashboard/DashboardHeader";
 
 
 function DashboardPage(){
@@ -7,7 +7,7 @@ function DashboardPage(){
         
         <div className= "DashboardPage">
             <div className="DashboardCard">
-                <AuthHeader title="Welcome" subtitle="its u r personal DashBoard !!" />
+                <DashboardHeader />
             </div>
         </div>
         

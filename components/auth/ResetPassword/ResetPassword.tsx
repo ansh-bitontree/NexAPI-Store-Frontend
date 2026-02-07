@@ -49,7 +49,7 @@ const ResetPassword = () => {
       setLoading(true);
 
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_AUTH_BASE_URL}/reset-password`,
+        `${process.env.NEXT_PUBLIC_AUTH_BASE_URL}/auth/reset-password`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
