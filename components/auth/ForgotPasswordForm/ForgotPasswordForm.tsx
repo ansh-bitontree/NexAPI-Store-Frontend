@@ -41,7 +41,7 @@ const ForgotPasswordForm = () => {
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:8000/auth/forget_password", { email });
+      await axios.post(`${process.env.NEXT_PUBLIC_AUTH_BASE_URL}/auth/forget_password`, { email });
       toast.info("If this email exists, a reset link has been sent.");
       setEmail("");
     } catch (e) {
