@@ -1,0 +1,35 @@
+.pg {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: sans-serif;
+}
+
+.pg-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.pg-loading {
+  font-size: 16px;
+  color: #555;
+}
+
+.pg-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 600px) {
+  .pg-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .pg-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
