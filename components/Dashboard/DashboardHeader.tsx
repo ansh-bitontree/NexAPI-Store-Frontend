@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import userProfile from "@/utils/assets/icons/userProfile.png"
-import api from "@/services/api";
 import "./DashboardHeader.css"
+import api from "../../services/api";
 
 export default function DashboardHeader() {
   const router = useRouter();
@@ -28,7 +27,7 @@ export default function DashboardHeader() {
 
         <Image
           className="userProfile"
-          src={userProfile}
+          src="/images/userProfile.png"
           alt="user profile"
           width={120}
           height={120}

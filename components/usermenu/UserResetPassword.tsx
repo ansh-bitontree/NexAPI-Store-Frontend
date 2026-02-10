@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { validateUserResetPassword } from "@/validators/user.validators";
-import api from "@/services/api";
 import { toast } from "react-toastify";
-import PasswordInput from "@/components/PasswordInput/PasswordInput";
-import PasswordToggle from "@/components/PasswordInput/PasswordToggle";
 import { AxiosError } from "axios";
+import { validateUserResetPassword } from "../../validators/user.validators";
+import api from "../../services/api";
+import PasswordInput from "../PasswordInput/PasswordInput";
+import PasswordToggle from "../PasswordInput/PasswordToggle";
 
 type Props = {
   onBack: () => void;

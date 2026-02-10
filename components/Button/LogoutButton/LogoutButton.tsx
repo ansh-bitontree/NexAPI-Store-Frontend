@@ -6,8 +6,8 @@ export default function LogoutButton() {
   const router = useRouter();
 
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    document.cookie = "token=; path=/; max-age=0";
+    document.cookie = "user=; path=/; max-age=0";
     router.push("/login");
   };
 

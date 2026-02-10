@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import api from "@/services/api";
 import "./UserMenu.css";
 import UserResetPassword from "./UserResetPassword";
-import { validateUpdatedProfile } from "@/validators/user.validators";
-import Input from "@/components/Input/Input";
-import LogoutButton from "@/components/Button/LogoutButton/LogoutButton";
 import { toast } from "react-toastify";
-import BackButton from "@/components/Button/BackButton/BackButton";
+import { validateUpdatedProfile } from "../../validators/user.validators";
+import api from "../../services/api";
+import BackButton from "../Button/BackButton/BackButton";
+import LogoutButton from "../Button/LogoutButton/LogoutButton";
+import Input from "../Input/Input";
 
 type User = {
   username: string;

@@ -1,7 +1,7 @@
 "use client";
-import AuthHeader from "@/components/auth/AuthHeader/AuthHeader";
-import LoginForm from "@/components/auth/LoginForm/LoginForm";
 import styles from "./login.module.css";
+import LoginForm from "../../components/auth/LoginForm/LoginForm";
+import AuthHeader from "../../components/auth/AuthHeader/AuthHeader";
 
 function LoginPage(){
     return(

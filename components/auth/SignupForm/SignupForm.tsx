@@ -4,13 +4,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";  
 import Link from "next/link";  
 import axios from "axios";
-import { toast } from "react-toastify";
-import Input from "@/components/Input/Input";  
-import PasswordInput from "@/components/PasswordInput/PasswordInput";
-import PasswordToggle from "@/components/PasswordInput/PasswordToggle"  
-import LoadingButton from "@/components/Button/LoadingButton/LoadingButton";  
-import { validateSingup } from "@/validators/auth.validators";  
+import { toast } from "react-toastify";  
 import "./SignupForm.css";
+import Input from "../../Input/Input";
+import PasswordInput from "../../PasswordInput/PasswordInput";
+import PasswordToggle from "../../PasswordInput/PasswordToggle";
+import { validateSingup } from "../../../validators/auth.validators";
+import LoadingButton from "../../Button/LoadingButton/LoadingButton";
 
 
 export default function SignupForm() {
@@ -119,7 +119,7 @@ export default function SignupForm() {
         error={errors.email} 
       />
 
-      <Input 
+      <Input
         label="Address" 
         name="address" 
         value={values.address} 

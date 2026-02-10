@@ -1,5 +1,5 @@
-import { EMAIL_REGEX, PASSWORD_REGEX } from "@/utils/regex";
-import { validateDOB } from "@/validators/dob.validator"
+import { EMAIL_REGEX, PASSWORD_REGEX } from "../app/utils/regex";
+import { validateDOB } from "./dob.validator";
 
 type ResetPasswordValues = {
   current_password: string;

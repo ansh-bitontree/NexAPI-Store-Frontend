@@ -1,4 +1,5 @@
-import { EMAIL_REGEX, PASSWORD_REGEX } from "@/utils/regex";
+
+import { EMAIL_REGEX, PASSWORD_REGEX } from "../app/utils/regex";
 import { validateDOB } from "./dob.validator";
 
 interface SignupValues {

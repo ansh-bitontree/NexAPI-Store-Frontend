@@ -1,4 +1,4 @@
-import UserMenu from "@/components/usermenu/UserMenu";
+import UserMenu from "../../components/usermenu/UserMenu";
 
 function LoginPage(){
     return(

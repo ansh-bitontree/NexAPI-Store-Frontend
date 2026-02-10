@@ -5,12 +5,12 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";  
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import Input from "@/components/Input/Input";
-import PasswordInput from "@/components/PasswordInput/PasswordInput";
-import PasswordToggle from "@/components/PasswordInput/PasswordToggle";
-import LoadingButton from "@/components/Button/LoadingButton/LoadingButton";
-import { validateLogin } from "@/validators/auth.validators";  
 import './LoginForm.css';
+import Input from "../../Input/Input";
+import { validateLogin } from "../../../validators/auth.validators";
+import PasswordInput from "../../PasswordInput/PasswordInput";
+import PasswordToggle from "../../PasswordInput/PasswordToggle";
+import LoadingButton from "../../Button/LoadingButton/LoadingButton";
 
 function LoginForm() {
   const [values, setValues] = useState({ email: "", password: "" });
@@ -42,8 +42,8 @@ function LoginForm() {
       `${process.env.NEXT_PUBLIC_AUTH_BASE_URL}/auth/login`,
       values
     );
-    localStorage.setItem("token", res.data.access_token);
-    localStorage.setItem("user", JSON.stringify(res.data.user));
+    document.cookie = `token=${res.data.access_token}; path=/; max-age=86400; SameSite=Lax`;
+    document.cookie = `user=${encodeURIComponent(JSON.stringify(res.data.user))}; path=/; max-age=86400; SameSite=Lax`;
 
     toast.success("Login successful");
     router.push("/dashboard");

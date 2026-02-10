@@ -1,7 +1,7 @@
 "use client";
-import AuthHeader from "@/components/auth/AuthHeader/AuthHeader";
-import SignupForm from "@/components/auth/SignupForm/SignupForm";
 import styles from "./signup.module.css";
+import AuthHeader from "../../components/auth/AuthHeader/AuthHeader";
+import SignupForm from "../../components/auth/SignupForm/SignupForm";
 
 function SignupPage(){
     return(

@@ -1,6 +1,8 @@
-"use client";
-import DashboardHeader from "@/components/Dashboard/DashboardHeader";
 
+
+import DashboardHeader from "../../components/Dashboard/DashboardHeader";
+import ProductsPage from "./products/ProductPage";
+export const dynamic = "force-dynamic";
 
 function DashboardPage(){
     return(
@@ -8,6 +10,7 @@ function DashboardPage(){
         <div className= "DashboardPage">
             <div className="DashboardCard">
                 <DashboardHeader />
+                <ProductsPage />
             </div>
         </div>
         
