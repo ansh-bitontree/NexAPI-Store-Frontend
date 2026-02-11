@@ -8,3 +8,6 @@ export interface Product {
   rating?: number;
   is_active: boolean;
 }
+
+export type SortBy = "id" | "name" | "price" | "rating";
+

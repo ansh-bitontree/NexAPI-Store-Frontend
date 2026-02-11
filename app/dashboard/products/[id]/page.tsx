@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 import "./ProductDetail.css";
 import { Product } from "../../../../types/product";
 import { getProductById } from "../../../../lib/productApi";
+import BackButton from "../../../../components/Button/BackButton/BackButton";
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -14,7 +16,7 @@ export default function ProductDetailPage() {
 
   useEffect(() => {
     if (!id || isNaN(id) || id <= 0) return;
-    
+
     getProductById(id)
       .then(setProduct)
       .catch((err) => {
@@ -23,16 +25,37 @@ export default function ProductDetailPage() {
       });
   }, [id]);
 
-  if (error) return <p className="pd-loading" style={{color: "red"}}>Error: {error}</p>;
+  if (error)
+    return (
+      <p className="pd-loading" style={{ color: "red" }}>
+        Error: {error}
+      </p>
+    );
+
   if (!product) return <p className="pd-loading">Loading...</p>;
 
   return (
+    <>
+      <BackButton />
     <div className="pd-wrap">
+      {product.image_url && (
+        <div className="pd-image-wrapper">
+          <Image
+            src={product.image_url}
+            alt={product.name}
+            fill
+            className="pd-image"
+            priority
+          />
+        </div>
+      )}
+
       <h1 className="pd-name">{product.name}</h1>
       <p className="pd-cat">{product.category}</p>
       <p className="pd-desc">{product.description}</p>
       <p className="pd-price">₹{product.price}</p>
       {product.rating && <p className="pd-rating">⭐ {product.rating}</p>}
     </div>
+    </>
   );
 }

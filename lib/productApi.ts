@@ -1,5 +1,5 @@
+import { Product } from "../types/product";
 import { apiFetch } from "./api";
-import { Product } from "@/types/product";
 
 export interface ProductListParams {
   page?: number;

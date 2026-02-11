@@ -39,23 +39,24 @@
   font-family: 'Segoe UI', sans-serif;
 }
 
-.pg-btn {
+.pg-wrap button.pg-btn {
   padding: 8px 14px;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #fff;
+  color: #333;
   cursor: pointer;
   font-weight: 500;
   transition: all 0.2s ease;
 }
 
-.pg-btn:hover:not(:disabled) {
+.pg-wrap button.pg-btn:hover:not(:disabled) {
   background-color: #f0f4ff;
   border-color: #1a73e8;
   color: #1a73e8;
 }
 
-.pg-btn:disabled {
+.pg-wrap button.pg-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
