@@ -1,5 +1,4 @@
-
-import { EMAIL_REGEX, PASSWORD_REGEX } from "../app/utils/regex";
+import { validatePassword, validateUsername, validateAddress, validateEmail, validateConfirmPassword } from "./form.validators";
 import { validateDOB } from "./dob.validator";
 
 interface SignupValues {
@@ -22,96 +21,75 @@ interface SignupErrors {
   confirmPassword?: string;
 }
 
-export function validateSingup(values: SignupValues): SignupErrors {
+export function validateSignup(values: SignupValues): SignupErrors {
   const errors: SignupErrors = {};
 
-  if (!values.username?.trim()) {
-    errors.username = "Username required";
-  }
+  const usernameError = validateUsername(values.username);
+  if (usernameError) errors.username = usernameError;
 
-  if (!values.email) {
-    errors.email = "E-mail required";
-  } else if (!EMAIL_REGEX.test(values.email)) {
-    errors.email = "Invalid E-mail";
-  }
+  const emailError = validateEmail(values.email);
+  if (emailError) errors.email = emailError;
 
-  if (!values.address?.trim()) {
-    errors.address = "Address required";
-  }
+  const addressError = validateAddress(values.address);
+  if (addressError) errors.address = addressError;
 
   const dobError = validateDOB(values.dob);
   if (dobError) errors.dob = dobError;
 
-  if (!values.gender) {
-    errors.gender = "Gender required";
-  }
+  if (!values.gender) errors.gender = "Gender required";
 
-  if (!values.password) {
-    errors.password = "Password required";
-  } else if (!PASSWORD_REGEX.test(values.password)) {
-    errors.password =
-      "Password must be at least 8 characters and include uppercase, lowercase, and number";
-  }
+  const passwordError = validatePassword(values.password);
+  if (passwordError) errors.password = passwordError;
 
-  if (!values.confirmPassword) {
-    errors.confirmPassword = "";
-  } else if (values.password !== values.confirmPassword) {
-    errors.confirmPassword = "Passwords do not match";
-  }
+  const confirmError = validateConfirmPassword(values.password, values.confirmPassword);
+  if (confirmError) errors.confirmPassword = confirmError;
 
   return errors;
 }
 
+// ========================
+// Login Validation
+// ========================
 
-interface LoginValues{
+interface LoginValues {
   email: string;
   password: string;
 }
 
-interface LoginErrors{
+interface LoginErrors {
   email?: string;
   password?: string;
 }
 
-
-export function validateLogin(values: LoginValues): LoginErrors{
+export function validateLogin(values: LoginValues): LoginErrors {
   const errors: LoginErrors = {};
 
+  const emailError = validateEmail(values.email);
+  if (emailError) errors.email = emailError;
 
-  if (!values.email) {
-    errors.email = "E-mail required";
-  } else if (!EMAIL_REGEX.test(values.email)) {
-    errors.email = "Invalid E-mail";
-  }
+  const passwordError = values.password ? undefined : "Password required";
+  if (passwordError) errors.password = passwordError;
 
-   if (!values.password) errors.password = "Password required";
-    return errors
+  return errors;
 }
 
+// ========================
+// Reset Password Validation
+// ========================
 
 export interface ResetPasswordErrors {
   password?: string;
   confirmPassword?: string;
 }
 
-export function validateResetPassword(
-  password: string,
-  confirmPassword: string
-): ResetPasswordErrors {
+export function validateResetPassword(password: string, confirmPassword: string): ResetPasswordErrors {
   const errors: ResetPasswordErrors = {};
 
-  if (!password) {
-    errors.password = "New password is required";
-  } else if (!PASSWORD_REGEX.test(password)) {
-    errors.password =
-      "Password must be 8+ characters and include uppercase, lowercase and number";
-  }
+  const passwordError = validatePassword(password);
+  if (passwordError) errors.password = passwordError;
 
-  if (!confirmPassword) {
-    errors.confirmPassword = "Confirm password is required";
-  } else if (password !== confirmPassword) {
-    errors.confirmPassword = "Passwords do not match";
-  }
+  const confirmError = validateConfirmPassword(password, confirmPassword);
+  if (confirmError) errors.confirmPassword = confirmError;
 
   return errors;
 }

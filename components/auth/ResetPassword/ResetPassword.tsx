@@ -2,13 +2,13 @@
 
 import { useState, ChangeEvent} from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import PasswordInput from "@/components/PasswordInput/PasswordInput";
-import FormError from "@/components/FormError/FormError";
-import PasswordToggle from "@/components/PasswordInput/PasswordToggle";
 import { toast } from "react-toastify";
-import { validateResetPassword } from "@/validators/auth.validators";
 import "./ResetPassword.css";
 import AuthHeader from "../AuthHeader/AuthHeader";
+import { validateResetPassword } from "../../../validators/auth.validators";
+import FormError from "../../FormError/FormError";
+import PasswordInput from "../../PasswordInput/PasswordInput";
+import PasswordToggle from "../../PasswordInput/PasswordToggle";
 
 interface ResetErrors {
   password?: string;

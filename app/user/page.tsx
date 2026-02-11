@@ -1,14 +1,228 @@
-import UserMenu from "../../components/usermenu/UserMenu";
+"use client";
 
-function LoginPage(){
-    return(
-        
-        <div >
-            <div >
-                <UserMenu />
+import { useEffect, useState } from "react";
+import "./UserMenu.css";
+import { toast } from "react-toastify";
+import { validateUpdatedProfile } from "../../validators/user.validators";
+import api from "../../services/api";
+import BackButton from "../../components/Button/BackButton/BackButton";
+import LogoutButton from "../../components/Button/LogoutButton/LogoutButton";
+import Input from "../../components/Input/Input";
+import UserResetPassword from "../../components/usermenu/UserResetPassword";
+
+type User = {
+  username: string;
+  email: string;
+  address?: string | null;
+  dob?: string | null;
+  gender?: string | null;
+};
+
+type ProfileFormValues = {
+  username: string;
+  email: string;
+  address: string;
+  dob: string;
+  gender: string;
+};
+
+export default function UserMenu() {
+  const [user, setUser] = useState<User | null>(null);
+  const [editMode, setEditMode] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [resetMode, setResetMode] = useState(false);
+  const [serverError, setServerError] = useState("");
+  const [errors, setErrors] = useState<formError>({});
+
+  const [formData, setFormData] = useState<ProfileFormValues>({
+    username: "",
+    email: "",
+    address: "",
+    dob: "",
+    gender: "",
+  });
+
+  interface formError{
+    username?: string,
+    email?: string,
+    address?: string,
+    dob?: string,
+    gender?: string,
+  }
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await api.get("/users/me");
+        const data = res.data as User;
+
+        setUser(data);
+        setFormData({
+          username: data.username || "",
+          email: data.email || "",
+          address: data.address ?? "",
+          dob: data.dob ?? "",
+          gender: data.gender ?? "",
+        });
+      } catch (err) {
+        console.error(err);
+        toast.error("Failed to load profile");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+
+    const newFormData = { ...formData, [name]: value };
+    setFormData(newFormData);
+
+    if (editMode) {
+      setErrors(validateUpdatedProfile(newFormData));
+    }
+  };
+
+  const handleUpdate = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setServerError("");
+
+    const validationErrors = validateUpdatedProfile(formData);
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) return;
+
+    try {
+      const res = await api.patch("/users/me", formData);
+      setUser(res.data);
+      setEditMode(false);
+      setErrors({});
+      toast.success("Profile updated!");
+    } catch (err) {
+      toast.error("Update failed");
+    }
+  };
+
+  if (loading) return <p>Loading profile...</p>;
+  if (!user) return <p>No user found</p>;
+
+  return (
+    <>
+      <BackButton />
+      <LogoutButton />
+
+      <div className="userMenu">
+        {!resetMode ? (
+          <>
+            <h2>My Profile</h2>
+
+            <div className="profileField">
+              <label>Username:</label>
+              {editMode ? (
+                <Input
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  error={errors.username}
+                />
+              ) : (
+                <span>{user.username}</span>
+              )}
             </div>
-        </div>
-        
-    );
+
+            <div className="profileField">
+              <label>Email:</label>
+              {editMode ? (
+                <Input
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  error={errors.email}
+                />
+              ) : (
+                <span>{user.email}</span>
+              )}
+            </div>
+
+            <div className="profileField">
+              <label>Address:</label>
+              {editMode ? (
+                <Input
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  error={errors.address}
+                />
+              ) : (
+                <span>{user.address || "-"}</span>
+              )}
+            </div>
+
+            <div className="profileField">
+              <label>Date of Birth:</label>
+              {editMode ? (
+                <Input
+                  type="date"
+                  name="dob"
+                  value={formData.dob}
+                  onChange={handleChange}
+                  error={errors.dob}
+                  max={new Date().toISOString().split("T")[0]}
+                />
+              ) : (
+                <span>{user.dob || "-"}</span>
+              )}
+            </div>
+
+            <div className="profileField">
+              <label>Gender:</label>
+              {editMode ? (
+                <select name="gender" value={formData.gender} onChange={handleChange}>
+                  <option value="">Select</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              ) : (
+                <span>{user.gender || "-"}</span>
+              )}
+            </div>
+
+            <div className="profile-btn">
+              {!editMode ? (
+                <button
+                  onClick={() => {
+                    setEditMode(true);
+                    setErrors({});
+                    setServerError("");
+                  }}
+                >
+                  Update Profile
+                </button>
+              ) : (
+                <>
+                  {serverError && <p className="form-error">{serverError}</p>}
+                  <div className="actions">
+                    <button onClick={handleUpdate}>Save</button>
+                    <button onClick={() => setEditMode(false)}>Cancel</button>
+                  </div>
+                </>
+              )}
+
+              {!editMode && (
+                <button onClick={() => setResetMode(true)}>Reset Password</button>
+              )}
+            </div>
+          </>
+        ) : (
+          <UserResetPassword onBack={() => setResetMode(false)} />
+        )}
+      </div>
+    </>
+  );
 }
-export default LoginPage;

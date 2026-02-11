@@ -1,5 +1,3 @@
-
-
 import DashboardHeader from "../../components/Dashboard/DashboardHeader";
 import ProductsPage from "./products/ProductPage";
 export const dynamic = "force-dynamic";

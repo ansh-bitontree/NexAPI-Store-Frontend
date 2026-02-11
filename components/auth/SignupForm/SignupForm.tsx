@@ -9,8 +9,8 @@ import "./SignupForm.css";
 import Input from "../../Input/Input";
 import PasswordInput from "../../PasswordInput/PasswordInput";
 import PasswordToggle from "../../PasswordInput/PasswordToggle";
-import { validateSingup } from "../../../validators/auth.validators";
 import LoadingButton from "../../Button/LoadingButton/LoadingButton";
+import { validateSignup } from "../../../validators/auth.validators";
 
 
 export default function SignupForm() {
@@ -50,7 +50,7 @@ export default function SignupForm() {
     setValues(newValues);
 
     if (isSubmitted) {
-      setErrors(validateSingup(newValues));
+      setErrors(validateSignup(newValues));
     }
   };
 
@@ -61,7 +61,7 @@ export default function SignupForm() {
     setServerError("");
     setIsSubmitted(true);
 
-    const validationErrors = validateSingup(values);
+    const validationErrors = validateSignup(values);
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) return;

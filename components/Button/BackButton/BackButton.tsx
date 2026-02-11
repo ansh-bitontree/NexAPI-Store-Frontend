@@ -1,26 +1,17 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Button from "../Button";
 
 export default function BackButton() {
   const router = useRouter();
 
-  const back = () => {
-    router.push("/dashboard");
-  };
-
   return (
-    <button
-      className="back"
-      onClick={back}
-      style={{
-        position: "fixed",
-        top: "20px",
-        left: "20px",
-        zIndex: 1000,
-      }}
-    >
-      Back
-    </button>
+      <Button
+        onClick={() => router.push("/dashboard")}
+        className="back"
+      >
+        Back
+      </Button>
   );
 }

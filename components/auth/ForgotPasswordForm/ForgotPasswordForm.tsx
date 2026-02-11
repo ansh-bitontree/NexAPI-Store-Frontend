@@ -2,10 +2,10 @@
 
 import { useState, ChangeEvent} from "react";
 import "./ForgotPasswordForm.css";
-import { EMAIL_REGEX } from "@/utils/regex";
 import axios from "axios";
 import { toast } from "react-toastify";
 import AuthHeader from "../AuthHeader/AuthHeader";
+import { EMAIL_REGEX } from "../../../app/utils/regex";
 
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState<string>("");

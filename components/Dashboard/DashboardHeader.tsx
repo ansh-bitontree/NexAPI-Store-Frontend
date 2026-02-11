@@ -21,7 +21,7 @@ export default function DashboardHeader() {
     <div className="dashboard-header">
       <div className="dashboard">
         <section className="hero">
-          <h1>Dashboard</h1>
+          <h1>NexAPI Store</h1>
           <p>Welcome, {username}</p>
         </section>
 

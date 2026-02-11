@@ -12,7 +12,7 @@
   margin-bottom: 24px;
   text-align: center;
   font-size: 1.6rem;
-  color: #222;
+  color: #7ab2b2;
 }
 
 .profileField {
@@ -22,10 +22,10 @@
 }
 
 .profileField label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #666;
   margin-bottom: 6px;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .profileField span {

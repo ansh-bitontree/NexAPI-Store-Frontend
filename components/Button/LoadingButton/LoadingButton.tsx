@@ -1,24 +1,22 @@
-'use client';  
+"use client";
 
-import './LoadingButton.css';  
+import Button from "../Button";
 
-interface LoadingButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+
+interface LoadingButtonProps {
   loading: boolean;
   children: React.ReactNode;
+  type?: "button" | "submit" | "reset";
 }
 
-export default function LoadingButton({ 
-  loading, 
-  children, 
-  ...props 
+export default function LoadingButton({
+  loading,
+  children,
+  ...props
 }: LoadingButtonProps) {
   return (
-    <button 
-      {...props} 
-      disabled={loading || props.disabled} 
-      className="btn"
-    >
-      {loading ? "Loading..." : children}
-    </button>
+    <Button loading={loading} {...props}>
+      {children}
+    </Button>
   );
 }
